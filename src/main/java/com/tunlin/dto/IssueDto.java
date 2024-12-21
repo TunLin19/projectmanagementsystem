@@ -1,7 +1,7 @@
-package com.tunlin.modal;
+package com.tunlin.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import com.tunlin.modal.Project;
+import com.tunlin.modal.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,17 +9,12 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Issue {
+public class IssueDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String title;
     private String description;
     private String status;
@@ -27,15 +22,9 @@ public class Issue {
     private String priority;
     private LocalDate dueDate;
     private List<String> tags = new ArrayList<>();
-
-    @ManyToOne
-    private User assignee;
-
-    @JsonIgnore
-    @ManyToOne
     private Project project;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "issue",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Comments> comments = new ArrayList<>();
+    // Exclude assignee during serialization
+    private User assignee;
+
 }

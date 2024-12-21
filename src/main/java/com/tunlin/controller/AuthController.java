@@ -42,7 +42,7 @@ public class AuthController {
         createUser.setPassword(passwordEncoder.encode(user.getPassword()));
         createUser.setFullName(user.getFullName());
 
-        User saveUser = userRepository.save(createUser);
+        userRepository.save(createUser);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -53,6 +53,7 @@ public class AuthController {
         authResponse.setJwt(jwt);
         authResponse.setMessage("signup success");
         return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
+
     }
 
     @PostMapping("/signing")
@@ -69,6 +70,7 @@ public class AuthController {
         authResponse.setJwt(jwt);
         authResponse.setMessage("signing success");
         return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
+
     }
 
     private Authentication authenticate(String username, String password) {
