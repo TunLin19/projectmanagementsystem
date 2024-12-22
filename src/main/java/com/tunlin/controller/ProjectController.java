@@ -68,7 +68,7 @@ public class ProjectController {
 
     @DeleteMapping("/{projectId}")
     public ResponseEntity<MessageResponse> deleteProject(@RequestHeader("Authorization") String jwt,
-                                                         @PathVariable("projectId") Long projectId) throws Exception {
+                                                         @PathVariable Long projectId) throws Exception {
         User user = userService.findUserProfileByJwt(jwt);
         projectService.deleteProject(projectId,user.getId());
         MessageResponse mes = new MessageResponse("Delete success");

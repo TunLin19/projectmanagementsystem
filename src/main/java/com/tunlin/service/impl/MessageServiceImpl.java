@@ -10,6 +10,7 @@ import com.tunlin.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -31,11 +32,25 @@ public class MessageServiceImpl implements MessageService {
                 new Exception("User not found with id" + senderId));
 
         Chat chat = projectService.getProjectById(projectId).getChat();
-        return null;
+
+        Message message = new Message();
+        message.setChat(chat);
+        message.setContent(content);
+        message.setSender(sender);
+        message.setCreatedAt(LocalDateTime.now());
+
+        Message savedMessage = messageRepository.save(message);
+        chat.getMessages().add(savedMessage);
+        return savedMessage;
+
     }
 
     @Override
     public List<Message> getMessageByProjectId(Long projectId) throws Exception {
-        return null;
+
+        Chat chat = projectService.getChatByProjectId(projectId);
+        List<Message> findByChatIdOrderByCreatedAtAsc = messageRepository.findByChatIdOrderByCreatedAtAsc(chat.getId());
+        return findByChatIdOrderByCreatedAtAsc;
+
     }
 }

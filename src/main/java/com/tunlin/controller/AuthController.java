@@ -5,6 +5,7 @@ import com.tunlin.modal.User;
 import com.tunlin.repository.UserRepository;
 import com.tunlin.request.LoginRequest;
 import com.tunlin.response.AuthResponse;
+import com.tunlin.service.SubscriptionService;
 import com.tunlin.service.impl.CustomeUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,10 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private CustomeUserDetailsImpl customeUserDetails;
+
+    @Autowired
+    private SubscriptionService subscriptionService;
+
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception {
 
@@ -42,7 +47,8 @@ public class AuthController {
         createUser.setPassword(passwordEncoder.encode(user.getPassword()));
         createUser.setFullName(user.getFullName());
 
-        userRepository.save(createUser);
+        User createdUser = userRepository.save(createUser);
+        subscriptionService.createSubscription(createdUser);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authentication);
