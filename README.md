@@ -1,4 +1,8 @@
-**Demo View**:https://project-managemnet-react.vercel.app
+**Clone kho lưu trữ**:
+
+   ```bash
+   git clone https://github.com/TunLin19/ecommerce-multivendor.git
+   ```
 
 **Project Management**
 
