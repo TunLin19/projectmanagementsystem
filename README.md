@@ -1,7 +1,7 @@
 **Clone kho lưu trữ**:
 
    ```bash
-   git clone https://github.com/TunLin19/ecommerce-multivendor.git
+   git https://github.com/TunLin19/projectmanagementsystem.git
    ```
 
 **Project Management**
